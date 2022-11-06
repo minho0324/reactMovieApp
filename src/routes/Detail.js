@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import styles from "./Detail.module.css";
 
 
 
@@ -26,24 +27,40 @@ function Detail() {
   }, []);
 
   return (
-    <div>
+    <div className={styles.container}>
         {loading ? 
             (
-                <div>
+                <div className={styles.loader}>
                 <span>Loading...</span>
                 </div>
             )
             :
             (
             <div>
-                <h1>영화 상세보기</h1>
-                <img src={detail.large_cover_image}  />
-                <h2>{detail.title_long}</h2>
-                <h3>{detail.description_full}</h3>
+              <div className={styles.movie}>
+                <img src={detail.large_cover_image} alt={detail.title} className={styles.movie__img} />
                 <div>
-                    <h4>토렌트 다운받기</h4>
+                  <h2 className={styles.movie__title}>
+                    {detail.title}
+                  </h2>
+                  <h3 className={styles.movie__year}>{detail.year}</h3>
+                  <p>{detail.description_full}</p>
+                  <ul className={styles.movie__genres}>
+                    {detail.genres.map((g) => (
+                      <li key={g}>{g}</li>
+                    ))}
+                  </ul>
+                  <div>
+                    <a href={detail.torrents[0].url}>download via Torrents</a>
+                  </div>
+                  <div>
+                    <a href={detail.url}>VISIT Official Website</a>
+                  </div>
                 </div>
+              </div>    
             </div>
+
+
             )
         }
     </div>
